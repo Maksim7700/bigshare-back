@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class RegistrationService {
 
@@ -28,6 +30,7 @@ public class RegistrationService {
         return userRepository.findByEmail(email) != null;
     }
 
+    @Transactional
     public ResponseEntity<String> register(UserDto userDto) {
         if (isExistUsername(userDto.getUsername())) {
             throw new UsernameException("User with this username already exists.");

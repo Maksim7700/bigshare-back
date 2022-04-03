@@ -6,8 +6,8 @@ jwt:
 spring:
   datasource:
     username: root
-    url: jdbc:mysql://localhost:3306/test123?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&nullCatalogMeansCurrent=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-    password: qwerty12345
+    url: jdbc:mysql://localhost:3306/bigshare?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&nullCatalogMeansCurrent=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
+    password: root
   jpa:
     generate-ddl: 'true'
     properties:
