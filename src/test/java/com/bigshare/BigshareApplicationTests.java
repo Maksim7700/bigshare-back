@@ -16,30 +16,30 @@ import static org.mockito.Mockito.*;
 @WebAppConfiguration
 class BigshareApplicationTests {
 
-	@Autowired
-	private UserService uService;
-
-	@Test
-	@WithMockUser(username="admin",  roles={"ADMIN"})
-	public void getAdmin() {
-		when(uService.getAdmin()).thenReturn(ResponseEntity.ok("ADMIN"));
-	}
-
-	@Test
-	@WithMockUser(username="freelancer", roles={"FREELANCER"})
-	public void getFreelancer() {
-		when(uService.getFreelancer()).thenReturn(ResponseEntity.ok("FREELANCER"));
-	}
-
-	@Test
-	@WithMockUser(username="client", roles={"CLIENT"})
-	public void getUser() {
-		when(uService.getClient()).thenReturn(ResponseEntity.ok("CLIENT"));
-	}
-
-	@Test
-	@WithMockUser(username="moderator", roles={"MODERATOR"})
-	public void getModerator() {
-		when(uService.getModerator()).thenReturn(ResponseEntity.ok("MODERATOR"));
-	}
+//	@Autowired
+//	private UserService uService;
+//
+//	@Test
+//	@WithMockUser(username="admin",  roles={"ADMIN"})
+//	public void getAdmin() {
+//		when(uService.getAdmin()).thenReturn(ResponseEntity.ok("ADMIN"));
+//	}
+//
+//	@Test
+//	@WithMockUser(username="freelancer", roles={"FREELANCER"})
+//	public void getFreelancer() {
+//		when(uService.getFreelancer()).thenReturn(ResponseEntity.ok("FREELANCER"));
+//	}
+//
+//	@Test
+//	@WithMockUser(username="client", roles={"CLIENT"})
+//	public void getUser() {
+//		when(uService.getClient()).thenReturn(ResponseEntity.ok("CLIENT"));
+//	}
+//
+//	@Test
+//	@WithMockUser(username="moderator", roles={"MODERATOR"})
+//	public void getModerator() {
+//		when(uService.getModerator()).thenReturn(ResponseEntity.ok("MODERATOR"));
+//	}
 }

@@ -36,16 +36,12 @@ public class UserMapper {
 
     private Set<Role> getDefaultRoles() {
         Set<Role> roles = new HashSet<>();
-        roles.add(getFreelancerRole());
-        roles.add(getClientRole());
+        Role moderator = getModeratorRole(RoleName.ROLE_MODERATOR.name());
+        roles.add(moderator);
         return roles;
     }
 
-    private Role getFreelancerRole() {
-        return roleRepository.findRoleByRole(RoleName.ROLE_FREELANCER.name());
-    }
-
-    private Role getClientRole() {
-        return roleRepository.findRoleByRole(RoleName.ROLE_CLIENT.name());
+    private Role getModeratorRole(String role) {
+        return roleRepository.findRoleByRole(role);
     }
 }

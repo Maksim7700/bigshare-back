@@ -13,11 +13,13 @@ import org.springframework.security.web.authentication.logout.LogoutSuccessHandl
 @Configuration
 public class LogoutConfig {
 
-    @Autowired
-    private JWTTokenHelper tokenHelper;
+    private final JWTTokenHelper tokenHelper;
+    private final TokenService tokenService;
 
-    @Autowired
-    private TokenService tokenService;
+    public LogoutConfig(JWTTokenHelper tokenHelper, TokenService tokenService) {
+        this.tokenHelper = tokenHelper;
+        this.tokenService = tokenService;
+    }
 
     @Bean
     public LogoutSuccessHandler logoutSuccessHandler() {
