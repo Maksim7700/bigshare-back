@@ -29,4 +29,13 @@ public class Role implements GrantedAuthority {
     public void setRole(RoleName role) {
         this.role = role.toString();
     }
+
+
+    @Override
+    public String toString() {
+        return "Role{" +
+                "id=" + id +
+                ", role='" + role + '\'' +
+                '}';
+    }
 }

@@ -30,7 +30,6 @@ public class JWTTokenHelper {
 
     private final JwtParser parser;
 
-    @Autowired
     public JWTTokenHelper(@Value("${jwt.auth.secret_key}") String secretKey) {
         parser = Jwts.parser().setSigningKey(secretKey);
     }

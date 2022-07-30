@@ -13,6 +13,7 @@ import java.util.List;
 @Configuration
 @Slf4j
 class MemoryCacheConfig {
+
     @Bean
     public CacheManager cacheManager() {
         log.info("Configuring memory cache");

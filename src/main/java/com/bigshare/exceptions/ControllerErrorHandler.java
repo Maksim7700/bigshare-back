@@ -3,6 +3,7 @@ package com.bigshare.exceptions;
 import com.bigshare.exceptions.field.FieldErrorResponse;
 import com.bigshare.exceptions.email.EmailException;
 import com.bigshare.exceptions.field.CustomFieldError;
+import com.bigshare.exceptions.invalid.InvalidUsernameOrPasswordException;
 import com.bigshare.exceptions.user.UsernameException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -51,6 +52,15 @@ public class ControllerErrorHandler extends ResponseEntityExceptionHandler {
         ErrorObject errorObject = new ErrorObject();
         errorObject.setStatus(HttpStatus.BAD_REQUEST.value());
         errorObject.setErrorCode(ErrorCode.BAD_REQUEST);
+        errorObject.setMessage(ex.getMessage());
+        return new ResponseEntity<>(errorObject, HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ErrorObject> handleEmailAlreadyExistsException(InvalidUsernameOrPasswordException ex) {
+        ErrorObject errorObject = new ErrorObject();
+        errorObject.setStatus(HttpStatus.BAD_REQUEST.value());
+        errorObject.setErrorCode(ErrorCode.INVALID_PASSWORD_OR_USERNAME);
         errorObject.setMessage(ex.getMessage());
         return new ResponseEntity<>(errorObject, HttpStatus.BAD_REQUEST);
     }

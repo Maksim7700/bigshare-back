@@ -1,7 +1,7 @@
 package com.bigshare.config.security;
 
 import com.bigshare.service.user.UserDetailServiceImpl;
-import com.bigshare.config.jwt.JWTAuteticatedFilter;
+import com.bigshare.config.jwt.JWTAutentificatedFilter;
 import com.bigshare.config.jwt.JWTTokenHelper;
 import com.bigshare.service.auth.TokenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,7 +60,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/**", "/api/v1/auth/login", "/registration").permitAll();
-        http.addFilterBefore(new JWTAuteticatedFilter(userDetailService, jwtTokenHelper, tokenService),
+        http.addFilterBefore(new JWTAutentificatedFilter(userDetailService, jwtTokenHelper, tokenService),
                 UsernamePasswordAuthenticationFilter.class);
     }
 

@@ -22,12 +22,13 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
-public class JWTAuteticatedFilter extends OncePerRequestFilter {
+public class JWTAutentificatedFilter extends OncePerRequestFilter {
+
     private final UserDetailsService userDetailsService;
     private final JWTTokenHelper jwtTokenHelper;
     private final TokenService tokenService;
 
-    public JWTAuteticatedFilter(UserDetailsService userDetailsService, JWTTokenHelper jwtTokenHelper, TokenService tokenService) {
+    public JWTAutentificatedFilter(UserDetailsService userDetailsService, JWTTokenHelper jwtTokenHelper, TokenService tokenService) {
         this.userDetailsService = userDetailsService;
         this.jwtTokenHelper = jwtTokenHelper;
         this.tokenService = tokenService;
