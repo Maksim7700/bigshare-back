@@ -2,7 +2,7 @@ package com.bigshare.service.user;
 
 import com.bigshare.model.requests.AuthenticationRequest;
 import com.bigshare.model.responses.LoginResponse;
-import com.bigshare.repository.user.UserRepository;
+import com.bigshare.repository.UserRepository;
 import com.bigshare.service.auth.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

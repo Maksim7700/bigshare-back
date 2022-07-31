@@ -1,4 +1,4 @@
-package com.bigshare.repository.user;
+package com.bigshare.repository;
 
 import com.bigshare.model.user.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
