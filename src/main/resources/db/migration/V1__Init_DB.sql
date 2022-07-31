@@ -26,9 +26,21 @@ create table user_role
     primary key (user_id, role_id)
 );
 
+
+create table visitor
+(
+    id           bigint auto_increment,
+    address      varchar(50),
+    date_visit   date,
+    country      varchar(25),
+    country_code varchar(25),
+    primary key (id)
+);
+
 alter table user_role
     add constraint user_role_fk foreign key (role_id) references role (role_id);
 alter table user_role
     add constraint user_user_fk foreign key (user_id) references user (user_id);
 
-alter table user add constraint us_name unique (username)
+alter table user
+    add constraint us_name unique (username)

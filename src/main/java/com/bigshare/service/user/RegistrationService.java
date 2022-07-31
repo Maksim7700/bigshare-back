@@ -3,7 +3,7 @@ package com.bigshare.service.user;
 import com.bigshare.exceptions.user.UsernameException;
 import com.bigshare.model.user.UserMapper;
 import com.bigshare.model.user.entity.dto.UserDto;
-import com.bigshare.repository.user.UserRepository;
+import com.bigshare.repository.UserRepository;
 import com.bigshare.exceptions.email.EmailException;
 import com.bigshare.model.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;

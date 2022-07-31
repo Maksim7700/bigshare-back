@@ -3,7 +3,7 @@ package com.bigshare.model.user;
 import com.bigshare.model.user.entity.Role;
 import com.bigshare.model.user.entity.User;
 import com.bigshare.model.user.entity.dto.UserDto;
-import com.bigshare.repository.user.RoleRepository;
+import com.bigshare.repository.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
