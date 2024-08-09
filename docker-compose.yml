@@ -1,6 +1,6 @@
 services:
   backend:
-    image: bigshare-back
+    image: mkuziv/bigshare-back:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -21,7 +21,7 @@ services:
         max-size: "10m"
         max-file: "3"
   db:
-    image: bigshare-database
+    image: mkuziv/bigshare-database:latest
     environment:
       MYSQL_ROOT_PASSWORD: new_password
       MYSQL_DATABASE: bigshare
