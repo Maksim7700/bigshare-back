@@ -1,9 +1,6 @@
 services:
   backend:
     image: mkuziv/bigshare-back:latest
-    build:
-      context: .
-      dockerfile: Dockerfile
     depends_on:
       - db
     networks:
@@ -26,7 +23,7 @@ services:
       MYSQL_ROOT_PASSWORD: new_password
       MYSQL_DATABASE: bigshare
     ports:
-      - "3307:3306"
+      - "3306:3306"
     networks:
       - app-network
     restart: always
