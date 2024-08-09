@@ -7,14 +7,14 @@ spring:
   datasource:
     username: root
     url: jdbc:mysql://localhost:3306/bigshare?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&nullCatalogMeansCurrent=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-    password: root
+    password: new_password
   jpa:
     generate-ddl: 'true'
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.MySQL5Dialect
+        dialect: org.hibernate.dialect.MySQL8Dialect
     hibernate:
       ddl-auto: validate
-    show-sql: 'false'
+    show-sql: 'true'
 server:
   port: ${PORT:8081}

@@ -12,3 +12,11 @@ runs automatically
 <b>Run qa. </b> application.yml (spring -> profiles -> active = qa)
 
 <b>Run prod. </b> application.yml (spring -> profiles -> active = prod])
+
+<hr>
+
+To run docker container use next commands:
+
+<b>docker-compose build</b>
+<br/>
+<b>docker-compose up</b>

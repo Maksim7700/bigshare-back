@@ -8,13 +8,13 @@
 		<version>2.6.2</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>crowd-marketing.com</groupId>
-	<artifactId>crowd-marketing</artifactId>
+	<groupId>bigshare.com</groupId>
+	<artifactId>bigshare</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>crowd marketing</name>
-	<description>Crowd marketing for Spring Boot</description>
+	<name>bigshare</name>
+	<description>Big Share for Spring Boot</description>
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -105,4 +105,28 @@
 			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 	</dependencies>
+
+	<build>
+		<plugins>
+			<!-- Spring Boot Maven Plugin -->
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+
+			<!-- Maven Jar Plugin to configure manifest -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>3.2.0</version>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>com.bigshare.BigshareApplication</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 </project>
