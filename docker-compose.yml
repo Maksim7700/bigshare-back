@@ -2,7 +2,8 @@ services:
   backend:
     image: mkuziv/bigshare-back:latest
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - app-network
     environment:
@@ -17,12 +18,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
-    command: >
-      sh -c "until nc -z db 3306; do
-        echo 'Waiting for database...';
-        sleep 2;
-      done;
-      java -jar your-app.jar"
+
   db:
     image: mkuziv/bigshare-database:latest
     environment:
@@ -38,6 +34,12 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pnew_password"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
 
 networks:
   app-network:
