@@ -17,6 +17,12 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    command: >
+      sh -c "until nc -z db 3306; do
+        echo 'Waiting for database...';
+        sleep 2;
+      done;
+      java -jar your-app.jar"
   db:
     image: mkuziv/bigshare-database:latest
     environment:
