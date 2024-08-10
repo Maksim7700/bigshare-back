@@ -1,5 +1,5 @@
 
-<h1>Crowd marketing</h1>
+<h1>Big Share</h1>
 <hr>
 <h3>mysql.</h3> application-{name}.yml (spring -> datasource) set your name of database and password
 
