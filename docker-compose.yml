@@ -1,8 +1,11 @@
+version: '3.8'
+
 services:
   backend:
     image: mkuziv/bigshare-back
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - app-network
     environment:
@@ -17,6 +20,7 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+
   db:
     image: mysql
     environment:
@@ -32,6 +36,11 @@ services:
       options:
         max-size: "10m"
         max-file: "3"
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "--silent"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
 
 networks:
   app-network:
