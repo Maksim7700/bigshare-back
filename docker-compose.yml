@@ -1,9 +1,6 @@
 services:
   backend:
-    image: my-app
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: mkuziv/bigshare-back
     depends_on:
       - db
     networks:
