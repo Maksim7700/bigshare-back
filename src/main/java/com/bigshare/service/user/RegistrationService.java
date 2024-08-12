@@ -1,11 +1,11 @@
 package com.bigshare.service.user;
 
+import com.bigshare.exceptions.email.EmailException;
 import com.bigshare.exceptions.user.UsernameException;
 import com.bigshare.model.user.UserMapper;
+import com.bigshare.model.user.entity.User;
 import com.bigshare.model.user.entity.dto.UserDto;
 import com.bigshare.repository.UserRepository;
-import com.bigshare.exceptions.email.EmailException;
-import com.bigshare.model.user.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,11 +16,15 @@ import javax.transaction.Transactional;
 @Service
 public class RegistrationService {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
+
+    private final UserMapper userMapper;
 
     @Autowired
-    private UserMapper userMapper;
+    public RegistrationService(UserRepository userRepository, UserMapper userMapper) {
+        this.userRepository = userRepository;
+        this.userMapper = userMapper;
+    }
 
     public boolean isExistUsername(String username) {
         return userRepository.findByUsername(username) != null;

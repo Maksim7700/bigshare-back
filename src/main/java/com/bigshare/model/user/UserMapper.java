@@ -15,11 +15,14 @@ import java.util.Set;
 @Component
 public class UserMapper {
 
-    @Autowired
-    private RoleRepository roleRepository;
+    private final RoleRepository roleRepository;
+    private final BCryptPasswordEncoder passwordEncoder;
 
     @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    public UserMapper(RoleRepository roleRepository, BCryptPasswordEncoder passwordEncoder) {
+        this.roleRepository = roleRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
 
     public User registrationToEntity(UserDto userDto) {
         return User.builder()

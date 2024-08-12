@@ -1,8 +1,8 @@
 package com.bigshare.exceptions;
 
-import com.bigshare.exceptions.field.FieldErrorResponse;
 import com.bigshare.exceptions.email.EmailException;
 import com.bigshare.exceptions.field.CustomFieldError;
+import com.bigshare.exceptions.field.FieldErrorResponse;
 import com.bigshare.exceptions.invalid.InvalidUsernameOrPasswordException;
 import com.bigshare.exceptions.user.UsernameException;
 import org.springframework.http.HttpHeaders;

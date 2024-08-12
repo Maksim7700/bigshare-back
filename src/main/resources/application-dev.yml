@@ -5,9 +5,9 @@ jwt:
     app: Spring-Security-App
 spring:
   datasource:
-    username: root
-    url: jdbc:mysql://localhost:3306/bigshare?useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC&nullCatalogMeansCurrent=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true&createDatabaseIfNotExist=true
-    password: new_password
+    username: ${MYSQL_USER:root}
+    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:bigshare}
+    password: ${MYSQL_PASSWORD:new_password}
   jpa:
     generate-ddl: 'true'
     properties:

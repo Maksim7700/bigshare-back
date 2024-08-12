@@ -1,9 +1,9 @@
 package com.bigshare.config.security;
 
-import com.bigshare.service.user.UserDetailServiceImpl;
 import com.bigshare.config.jwt.JWTAutentificatedFilter;
 import com.bigshare.config.jwt.JWTTokenHelper;
 import com.bigshare.service.auth.TokenService;
+import com.bigshare.service.user.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,15 +25,19 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Lazy
+
+    private final UserDetailServiceImpl userDetailService;
+    private final JWTTokenHelper jwtTokenHelper;
+    private final AuthenticationEntryPoint authenticationEntryPoint;
+    private final TokenService tokenService;
+
     @Autowired
-    private UserDetailServiceImpl userDetailService;
-    @Autowired
-    private JWTTokenHelper jwtTokenHelper;
-    @Autowired
-    private AuthenticationEntryPoint authenticationEntryPoint;
-    @Autowired
-    private TokenService tokenService;
+    public SecurityConfiguration(@Lazy UserDetailServiceImpl userDetailService, JWTTokenHelper jwtTokenHelper, AuthenticationEntryPoint authenticationEntryPoint, TokenService tokenService) {
+        this.userDetailService = userDetailService;
+        this.jwtTokenHelper = jwtTokenHelper;
+        this.authenticationEntryPoint = authenticationEntryPoint;
+        this.tokenService = tokenService;
+    }
 
     @Bean
     @Override
