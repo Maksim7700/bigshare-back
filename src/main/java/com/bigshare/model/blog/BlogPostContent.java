@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -19,7 +20,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Data
-@Table(name="blog_post_content")
+@Table(name = "blog_post_content")
 @NoArgsConstructor
 @AllArgsConstructor
 public class BlogPostContent {
@@ -28,27 +29,15 @@ public class BlogPostContent {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String title;
+
     @Lob
     private String text;
 
+    @Column(nullable = true)
     private String imageUrl;
-
-    private LocalDateTime createdAt;
-
-    private LocalDateTime updatedAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blog_id")
     private Blog blog;
-
-    @PrePersist
-    protected void onCreate() {
-        createdAt = LocalDateTime.now();
-        updatedAt = createdAt;
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        updatedAt = LocalDateTime.now();
-    }
 }

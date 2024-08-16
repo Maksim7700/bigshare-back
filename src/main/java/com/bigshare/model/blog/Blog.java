@@ -4,16 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +25,21 @@ public class Blog {
     @Lob
     private String content;
 
-    private String author;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "author_id")
+    private Author author;
 
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    private boolean posted;
+
+    public Blog(String title, String content, Author author) {
+        this.title = title;
+        this.content = content;
+        this.author = author;
+    }
 
     @OneToMany(mappedBy = "blog", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BlogPostContent> contents = new ArrayList<>();
@@ -47,6 +48,7 @@ public class Blog {
     protected void onCreate() {
         createdAt = LocalDateTime.now();
         updatedAt = createdAt;
+        posted = false;
     }
 
     @PreUpdate
