@@ -1,19 +1,16 @@
-package com.bigshare.model.responses;
-
+package com.bigshare.requests;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorDTO {
-    private Long id;
+public class AuthorRequest {
     private String name;
-    private ImageDTO image;
-
-    // Constructors, getters, and setters
+    private MultipartFile image;
 }

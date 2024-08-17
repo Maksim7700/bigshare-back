@@ -3,7 +3,9 @@ package com.bigshare.model.blog;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import net.minidev.json.annotate.JsonIgnore;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -34,8 +37,10 @@ public class BlogPostContent {
     @Lob
     private String text;
 
-    @Column(nullable = true)
-    private String imageUrl;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id")
+    @JsonIgnore
+    private BlogImage image;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "blog_id")

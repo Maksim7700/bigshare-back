@@ -1,11 +1,11 @@
 package com.bigshare.converters;
 
-import com.bigshare.model.responses.UserResponse;
-import com.bigshare.model.user.entity.User;
+import com.bigshare.dtos.UserDTO;
+import com.bigshare.model.user.User;
 
 public class UserConverter {
 
-    public static UserResponse convertToUserResponse(User user) {
-        return new UserResponse(user.getUsername());
+    public static UserDTO convertToUserResponse(User user) {
+        return new UserDTO(user.getUsername());
     }
 }

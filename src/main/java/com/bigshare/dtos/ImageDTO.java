@@ -1,4 +1,4 @@
-package com.bigshare.model.responses;
+package com.bigshare.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

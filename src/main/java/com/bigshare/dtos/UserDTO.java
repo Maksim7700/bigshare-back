@@ -1,10 +1,10 @@
-package com.bigshare.model.responses;
+package com.bigshare.dtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UserResponse {
+public class UserDTO {
     private String username;
 }

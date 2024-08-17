@@ -1,16 +1,17 @@
-package com.bigshare.model.requests;
+package com.bigshare.requests;
+
 
 import lombok.AllArgsConstructor;
-import lombok.Getter;
+import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorRequest {
-    private String name;
+public class BlogPostContentRequest {
+
+    private String title;
+    private String text;
     private MultipartFile image;
 }

@@ -1,6 +1,6 @@
 package com.bigshare.repository;
 
-import com.bigshare.model.blog.Author;
+import com.bigshare.model.author.Author;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

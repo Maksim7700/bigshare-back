@@ -1,6 +1,6 @@
 package com.bigshare.config.jwt;
 
-import com.bigshare.model.user.entity.User;
+import com.bigshare.model.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;

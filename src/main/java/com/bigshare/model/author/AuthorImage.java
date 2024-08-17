@@ -1,4 +1,4 @@
-package com.bigshare.model.blog;
+package com.bigshare.model.author;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -16,7 +16,7 @@ import javax.persistence.Lob;
 @AllArgsConstructor
 @Getter
 @Setter
-public class Image {
+public class AuthorImage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

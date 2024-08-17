@@ -2,7 +2,7 @@ package com.bigshare.config.security;
 
 import com.bigshare.config.jwt.JWTAutentificatedFilter;
 import com.bigshare.config.jwt.JWTTokenHelper;
-import com.bigshare.service.auth.TokenService;
+import com.bigshare.service.TokenService;
 import com.bigshare.service.user.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
