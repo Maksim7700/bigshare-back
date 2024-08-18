@@ -4,7 +4,6 @@ import com.bigshare.config.jwt.JWTAutentificatedFilter;
 import com.bigshare.config.jwt.JWTTokenHelper;
 import com.bigshare.service.TokenService;
 import com.bigshare.service.user.UserDetailServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
@@ -19,19 +18,22 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-
     private final UserDetailServiceImpl userDetailService;
     private final JWTTokenHelper jwtTokenHelper;
     private final AuthenticationEntryPoint authenticationEntryPoint;
     private final TokenService tokenService;
 
-    @Autowired
     public SecurityConfiguration(@Lazy UserDetailServiceImpl userDetailService, JWTTokenHelper jwtTokenHelper, AuthenticationEntryPoint authenticationEntryPoint, TokenService tokenService) {
         this.userDetailService = userDetailService;
         this.jwtTokenHelper = jwtTokenHelper;
@@ -63,7 +65,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/**", "/api/v1/auth/login", "/registration").permitAll();
+                .antMatchers("/api/v1/auth/login", "/registration", "/**").permitAll()
+                .anyRequest().authenticated();
+
         http.addFilterBefore(new JWTAutentificatedFilter(userDetailService, jwtTokenHelper, tokenService),
                 UsernamePasswordAuthenticationFilter.class);
     }
@@ -76,5 +80,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(List.of("http://localhost:3000")); // Set your frontend URL
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
 }

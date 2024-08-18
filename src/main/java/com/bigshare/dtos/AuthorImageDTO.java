@@ -1,6 +1,5 @@
 package com.bigshare.dtos;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,10 +9,11 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AuthorDTO {
+public class AuthorImageDTO {
     private Long id;
+    private String data;
+    private String type;
     private String name;
-    private AuthorImageDTO image;
 
     // Constructors, getters, and setters
 }

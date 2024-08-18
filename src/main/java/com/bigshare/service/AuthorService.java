@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -39,14 +40,19 @@ public class AuthorService {
         return authorRepository.save(author);
     }
 
-    public ResponseEntity<?> getAuthorByName(String name) {
-        Author author = authorRepository.findByName(name);
-        if (author != null) {
-            return ResponseEntity.ok(AuthorConverter.convertToDTO(author));
+    public ResponseEntity<?> getAuthorById(Long id) {
+        Optional<Author> author = authorRepository.findById(id);
+        if (author.isPresent()) {
+            return ResponseEntity.ok(AuthorConverter.convertToDTO(author.get()));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body("Author not found");
         }
+    }
+
+    public ResponseEntity<?> deleteById(Long id) {
+        authorRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
     }
 
     public ResponseEntity<List<AuthorDTO>> getAllAuthors() {

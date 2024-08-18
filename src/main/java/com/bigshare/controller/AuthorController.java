@@ -10,13 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,16 +30,21 @@ public class AuthorController {
         try {
             Author savedAuthor = authorService.createAuthor(authorRequest);
             return new ResponseEntity<>(savedAuthor, HttpStatus.CREATED);
-        } catch (
-                IOException e) {
-            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (IOException e) {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @PreAuthorize("hasAnyRole('MODERATOR', 'ADMIN')")
-    @GetMapping("/{name}")
-    public ResponseEntity<?>  getAuthor(@PathVariable("name") String name){
-        return authorService.getAuthorByName(name);
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getAuthor(@PathVariable Long id) {
+        return authorService.getAuthorById(id);
+    }
+
+    @PreAuthorize("hasAnyRole('MODERATOR', 'ADMIN')")
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteAuthor(@PathVariable Long id) {
+        return authorService.deleteById(id);
     }
 
     @PreAuthorize("hasAnyRole('MODERATOR', 'ADMIN')")

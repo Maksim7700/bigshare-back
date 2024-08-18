@@ -3,7 +3,7 @@ package com.bigshare.converters;
 import com.bigshare.model.author.Author;
 import com.bigshare.model.author.AuthorImage;
 import com.bigshare.dtos.AuthorDTO;
-import com.bigshare.dtos.ImageDTO;
+import com.bigshare.dtos.AuthorImageDTO;
 
 import java.util.Base64;
 
@@ -16,7 +16,7 @@ public class AuthorConverter {
 
         AuthorImage image = author.getImage();
         if (image != null) {
-            ImageDTO imageDTO = new ImageDTO();
+            AuthorImageDTO imageDTO = new AuthorImageDTO();
             imageDTO.setId(image.getId());
             imageDTO.setType(image.getType());
             imageDTO.setName(image.getName());

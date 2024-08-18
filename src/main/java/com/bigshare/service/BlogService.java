@@ -1,5 +1,7 @@
 package com.bigshare.service;
 
+import com.bigshare.converters.BlogConverter;
+import com.bigshare.dtos.BlogDTO;
 import com.bigshare.model.author.Author;
 import com.bigshare.model.author.AuthorImage;
 import com.bigshare.model.blog.Blog;
@@ -12,6 +14,10 @@ import com.bigshare.repository.BlogRepository;
 import com.bigshare.requests.BlogPostContentRequest;
 import com.bigshare.requests.BlogRequest;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -41,8 +47,8 @@ public class BlogService {
             .orElseThrow(() -> new RuntimeException("Author not found with id: " + blogRequest.getAuthorId()));
 
         Blog blog = new Blog();
-        blog.setTitle(blog.getTitle());
-        blog.setContent(blog.getContent());
+        blog.setTitle(blogRequest.getTitle());
+        blog.setContent(blogRequest.getContent());
         blog.setAuthor(author);
         if (isPresentImage(blogRequest)) {
             BlogImage image = new BlogImage();
@@ -54,7 +60,9 @@ public class BlogService {
             blog.setImage(image);
         }
 
-        return ResponseEntity.ok(blogRepository.save(blog));
+        blogRepository.save(blog);
+
+        return ResponseEntity.ok(HttpStatus.CREATED);
     }
 
     @Transactional
@@ -80,8 +88,12 @@ public class BlogService {
     }
 
     @Transactional
-    public ResponseEntity<List<Blog>> getAll() {
-        return ResponseEntity.ok(blogRepository.findAll());
+    public ResponseEntity<Page<BlogDTO>> getAll(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BlogDTO> blogs = blogRepository.findAll(pageable).map(
+                BlogConverter::toDto
+        );
+        return ResponseEntity.ok(blogs);
     }
 
 

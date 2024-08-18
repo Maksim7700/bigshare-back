@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ImageDTO {
+public class BlogImageDTO {
     private Long id;
-    private String data;
+    private byte[] data;
     private String type;
     private String name;
 
