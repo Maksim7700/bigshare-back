@@ -39,7 +39,7 @@ public class Blog {
     @Lob
     private String content;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "author_id")
     private Author author;
 

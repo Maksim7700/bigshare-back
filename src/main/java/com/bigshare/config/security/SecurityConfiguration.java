@@ -65,9 +65,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/login", "/registration", "/**").permitAll()
+                .antMatchers("/api/v1/auth/login", "/registration", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                .antMatchers("/api/view/blogs", "/blogs").permitAll()  // Ensure this endpoint is accessible if it should be public
                 .anyRequest().authenticated();
 
+        // Add JWT filter before UsernamePasswordAuthenticationFilter
         http.addFilterBefore(new JWTAutentificatedFilter(userDetailService, jwtTokenHelper, tokenService),
                 UsernamePasswordAuthenticationFilter.class);
     }
@@ -86,7 +88,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000")); // Set your frontend URL
-        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+        configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         configuration.setAllowCredentials(true);
 

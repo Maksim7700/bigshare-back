@@ -1,9 +1,10 @@
 package com.bigshare.service;
 
 import com.bigshare.converters.BlogConverter;
+import com.bigshare.converters.BlogPostContentConverter;
 import com.bigshare.dtos.BlogDTO;
+import com.bigshare.dtos.BlogPostContentDTO;
 import com.bigshare.model.author.Author;
-import com.bigshare.model.author.AuthorImage;
 import com.bigshare.model.blog.Blog;
 import com.bigshare.model.blog.BlogImage;
 import com.bigshare.model.blog.BlogPostContent;
@@ -23,7 +24,6 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.io.IOException;
-import java.util.List;
 
 @Service
 public class BlogService {
@@ -66,12 +66,13 @@ public class BlogService {
     }
 
     @Transactional
-    public ResponseEntity<BlogPostContent> addBlogPostContent(Long blogId, BlogPostContentRequest blogPostContentRequest) throws IOException {
+    public ResponseEntity<?> addBlogPostContent(Long blogId, BlogPostContentRequest blogPostContentRequest) throws IOException {
         Blog blog = blogRepository.findById(blogId)
                 .orElseThrow(() -> new RuntimeException("Blog not found with id: " + blogId));
 
         BlogPostContent blogPostContent = new BlogPostContent();
         blogPostContent.setText(blogPostContentRequest.getText());
+        blogPostContent.setTitle(blogPostContentRequest.getTitle());
         blogPostContent.setBlog(blog);
 
         if (isPresentImage(blogPostContentRequest)) {
@@ -83,8 +84,18 @@ public class BlogService {
             image = blogImageRepository.save(image);
             blogPostContent.setImage(image);
         }
+        blogPostContentRepository.save(blogPostContent);
 
-        return ResponseEntity.ok(blogPostContentRepository.save(blogPostContent));
+        return ResponseEntity.ok(HttpStatus.CREATED);
+    }
+
+    @Transactional
+    public ResponseEntity<Page<BlogPostContentDTO>> getAllBlogPostContents(Long blogId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        Page<BlogPostContentDTO> blogPostContents = blogPostContentRepository
+                .findByBlogId(blogId, pageable)
+                .map(BlogPostContentConverter::toBlogPostContentDTO);
+        return ResponseEntity.ok(blogPostContents);
     }
 
     @Transactional
@@ -94,6 +105,28 @@ public class BlogService {
                 BlogConverter::toDto
         );
         return ResponseEntity.ok(blogs);
+    }
+
+    @Transactional
+    public ResponseEntity<Page<BlogDTO>> getAllPosted(int size) {
+        Pageable pageable = PageRequest.of(0, size);
+        Page<BlogDTO> blogs = blogRepository.findAllByPostedIsTrue(pageable).map(
+                BlogConverter::toDto
+        );
+        return ResponseEntity.ok(blogs);
+    }
+
+    @Transactional
+    public ResponseEntity<?> updateBlog(Long blogId, boolean status) {
+        Blog blog = blogRepository.findById(blogId).orElseThrow(() -> new RuntimeException("Blog not found with id: " + blogId));
+        blog.setPosted(status);
+        blogRepository.save(blog);
+        return ResponseEntity.noContent().build();
+    }
+
+    public ResponseEntity<?> deleteBlog(Long blogId) {
+        blogRepository.deleteById(blogId);
+        return ResponseEntity.ok(HttpStatus.OK);
     }
 
 
