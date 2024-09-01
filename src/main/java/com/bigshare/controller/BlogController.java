@@ -35,7 +35,7 @@ public class BlogController {
     private final BlogService blogService;
 
     @PreAuthorize("hasAnyRole('MODERATOR', 'ADMIN')")
-    @PostMapping("/{blogId}")
+    @PostMapping(path = "/{blogId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<?> addBlogPostContent(
             @PathVariable Long blogId,
             @ModelAttribute BlogPostContentRequest request) throws IOException {

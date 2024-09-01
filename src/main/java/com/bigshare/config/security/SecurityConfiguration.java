@@ -66,10 +66,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/login", "/registration", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
-                .antMatchers("/api/view/blogs", "/blogs").permitAll()  // Ensure this endpoint is accessible if it should be public
+                .antMatchers("/api/view/blogs", "/blogs", "/api/view/blogs/**").permitAll()  // Ensure this endpoint is accessible if it should be public
                 .anyRequest().authenticated();
 
-        // Add JWT filter before UsernamePasswordAuthenticationFilter
         http.addFilterBefore(new JWTAutentificatedFilter(userDetailService, jwtTokenHelper, tokenService),
                 UsernamePasswordAuthenticationFilter.class);
     }

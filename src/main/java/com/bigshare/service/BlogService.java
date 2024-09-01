@@ -4,6 +4,7 @@ import com.bigshare.converters.BlogConverter;
 import com.bigshare.converters.BlogPostContentConverter;
 import com.bigshare.dtos.BlogDTO;
 import com.bigshare.dtos.BlogPostContentDTO;
+import com.bigshare.dtos.BlogViewDTO;
 import com.bigshare.model.author.Author;
 import com.bigshare.model.blog.Blog;
 import com.bigshare.model.blog.BlogImage;
@@ -102,7 +103,7 @@ public class BlogService {
     public ResponseEntity<Page<BlogDTO>> getAll(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
         Page<BlogDTO> blogs = blogRepository.findAll(pageable).map(
-                BlogConverter::toDto
+                BlogConverter::toBlogDto
         );
         return ResponseEntity.ok(blogs);
     }
@@ -111,9 +112,14 @@ public class BlogService {
     public ResponseEntity<Page<BlogDTO>> getAllPosted(int size) {
         Pageable pageable = PageRequest.of(0, size);
         Page<BlogDTO> blogs = blogRepository.findAllByPostedIsTrue(pageable).map(
-                BlogConverter::toDto
+                BlogConverter::toBlogDto
         );
         return ResponseEntity.ok(blogs);
+    }
+
+    @Transactional
+    public ResponseEntity<BlogViewDTO> getBlogView(Long blogId) {
+        return ResponseEntity.ok(BlogConverter.toBlogViewDto(blogRepository.getById(blogId)));
     }
 
     @Transactional
