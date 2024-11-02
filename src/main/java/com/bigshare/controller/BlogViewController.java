@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @CrossOrigin
 @RestController
 @RequestMapping("/api/view/blogs")
@@ -32,5 +34,13 @@ public class BlogViewController {
     @GetMapping("/{id}")
     public ResponseEntity<BlogViewDTO> getBlogView(@PathVariable Long id) {
         return blogService.getBlogView(id);
+    }
+
+    @GetMapping("/latest")
+    public ResponseEntity<Page<BlogDTO>> getLatestBlogsExcluding(
+            @RequestParam Long excludeId,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "3") int size) {
+        return blogService.getLatestBlogsExcluding(excludeId, page, size);
     }
 }

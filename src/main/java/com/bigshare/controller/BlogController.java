@@ -80,5 +80,11 @@ public class BlogController {
     public ResponseEntity<?> delete(@PathVariable long blogId) {
         return blogService.deleteBlog(blogId);
     }
+
+    @PreAuthorize("hasAnyRole('MODERATOR', 'ADMIN')")
+    @DeleteMapping("/blog-post-content/{deleteBlogPostContentId}")
+    public ResponseEntity<?> deleteBlogPostContent(@PathVariable long deleteBlogPostContentId) {
+        return blogService.deleteBlogPostContent(deleteBlogPostContentId);
+    }
 }
 
