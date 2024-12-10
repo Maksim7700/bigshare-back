@@ -1,4 +1,4 @@
-package com.bigshare.model.user.entity;
+package com.bigshare.model.user;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;

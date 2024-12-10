@@ -1,11 +1,9 @@
 package com.bigshare.repository;
 
-import com.bigshare.model.user.Role;
+import com.bigshare.model.blog.BlogImage;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
-    Role findRoleByRole(String role);
+public interface BlogImageRepository extends JpaRepository<BlogImage, Long> {
 }

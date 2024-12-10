@@ -1,4 +1,4 @@
-package com.bigshare.model.user;
+package com.bigshare.enums;
 
 public enum RoleName {
 

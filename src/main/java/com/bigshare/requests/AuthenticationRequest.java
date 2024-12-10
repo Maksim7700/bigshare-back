@@ -1,4 +1,4 @@
-package com.bigshare.model.requests;
+package com.bigshare.requests;
 
 import lombok.Getter;
 import org.hibernate.validator.constraints.Length;

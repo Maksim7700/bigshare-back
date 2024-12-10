@@ -1,8 +1,8 @@
-package com.bigshare.service.auth;
+package com.bigshare.service;
 
 import com.bigshare.config.jwt.JWTTokenHelper;
 import com.bigshare.exceptions.invalid.InvalidUsernameOrPasswordException;
-import com.bigshare.model.requests.AuthenticationRequest;
+import com.bigshare.requests.AuthenticationRequest;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

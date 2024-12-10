@@ -1,6 +1,6 @@
 package com.bigshare.controller.user;
 
-import com.bigshare.model.requests.AuthenticationRequest;
+import com.bigshare.requests.AuthenticationRequest;
 import com.bigshare.service.user.UserDetailServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;

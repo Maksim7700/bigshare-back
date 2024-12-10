@@ -5,8 +5,9 @@ jwt:
     app: Spring-Security-App
 spring:
   datasource:
-    username: ${MYSQL_USER:root}
-    url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:bigsahre}
+    username: ${MYSQL_USER:admin}
+    url: jdbc:mysql://${MYSQL_HOST:bigshare-mysql.cnm6saymschf.eu-north-1.rds.amazonaws.com}:${MYSQL_PORT:3306}/${MYSQL_DATABASE:bigshare_db}?createDatabaseIfNotExist=true
+#    docker run -p 8090:8081 --name bigshare-api-container --net bigshare-network -e MYSQL_HOST=bigshare-mysql -e MYSQL_USER=root -e MYSQL_PASSWORD=new_password -e MYSQL_PORT=3306 -e MYSQL_DATABASE=bigshare mkuziv/bigshare-backend
     password: ${MYSQL_PASSWORD:new_password}
   jpa:
     generate-ddl: 'true'
@@ -16,5 +17,10 @@ spring:
     hibernate:
       ddl-auto: validate
     show-sql: 'true'
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 5MB
 server:
   port: ${PORT:8083}
+

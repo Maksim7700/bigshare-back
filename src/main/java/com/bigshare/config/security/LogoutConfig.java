@@ -1,7 +1,7 @@
 package com.bigshare.config.security;
 
 import com.bigshare.config.jwt.JWTTokenHelper;
-import com.bigshare.service.auth.TokenService;
+import com.bigshare.service.TokenService;
 import com.bigshare.utils.SecurityUtils;
 import io.jsonwebtoken.Claims;
 import org.springframework.context.annotation.Bean;

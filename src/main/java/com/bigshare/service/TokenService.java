@@ -1,4 +1,4 @@
-package com.bigshare.service.auth;
+package com.bigshare.service;
 
 import com.bigshare.utils.SecurityUtils;
 import org.apache.commons.lang3.StringUtils;

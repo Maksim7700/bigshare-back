@@ -1,6 +1,6 @@
-package com.bigshare.model.user.entity;
+package com.bigshare.model.user;
 
-import com.bigshare.model.user.RoleName;
+import com.bigshare.enums.RoleName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
