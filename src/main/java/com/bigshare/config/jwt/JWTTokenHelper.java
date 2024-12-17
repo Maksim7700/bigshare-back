@@ -5,6 +5,9 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -12,12 +15,13 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.crypto.spec.SecretKeySpec;
+import java.security.Key;
 import java.util.Date;
-
 
 @Configuration
 public class JWTTokenHelper {
+
     @Value("${jwt.auth.app}")
     private String appName;
 
@@ -28,20 +32,25 @@ public class JWTTokenHelper {
     private long expiresIn;
 
     private final JwtParser parser;
+    private final Key signingKey;
+    private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
+
 
     public JWTTokenHelper(@Value("${jwt.auth.secret_key}") String secretKey) {
-        parser = Jwts.parser().setSigningKey(secretKey);
+        this.signingKey = new SecretKeySpec(secretKey.getBytes(), SIGNATURE_ALGORITHM.getJcaName());
+        this.parser = Jwts.parserBuilder()
+                .setSigningKey(signingKey)
+                .build();
     }
 
     public static final String BEARER = "Bearer ";
 
-    private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
 
     public Claims getAllClaimsFromToken(String token) {
         Claims claims;
         try {
-            claims = Jwts.parser()
-                    .setSigningKey(secretKey)
+            claims = Jwts.parserBuilder()
+                    .setSigningKey(signingKey).build()
                     .parseClaimsJws(token)
                     .getBody();
         } catch (Exception e) {
@@ -49,7 +58,6 @@ public class JWTTokenHelper {
         }
         return claims;
     }
-
 
     public String getUsernameFromToken(String token) {
         String username;
@@ -63,7 +71,6 @@ public class JWTTokenHelper {
     }
 
     public String generateToken(Authentication authentication, String tokenId) {
-
         if (authentication.getPrincipal() instanceof User) {
             User user = (User) authentication.getPrincipal();
             if (tokenId == null) {
@@ -77,7 +84,7 @@ public class JWTTokenHelper {
                 .setIssuedAt(new Date())
                 .setId(tokenId)
                 .setExpiration(generateExpirationDate())
-                .signWith(SIGNATURE_ALGORITHM, secretKey)
+                .signWith(signingKey)
                 .compact();
     }
 
@@ -95,10 +102,9 @@ public class JWTTokenHelper {
     }
 
     public boolean isTokenExpired(String token) {
-        Date expireDate=getExpirationDate(token);
+        Date expireDate = getExpirationDate(token);
         return expireDate.before(new Date());
     }
-
 
     private Date getExpirationDate(String token) {
         Date expireDate;
@@ -111,31 +117,32 @@ public class JWTTokenHelper {
         return expireDate;
     }
 
-    public String getToken( HttpServletRequest request ) {
-
-        String authHeader = getAuthHeaderFromHeader( request );
-        if ( authHeader != null && authHeader.startsWith("Bearer ")) {
+    public String getToken(HttpServletRequest request) {
+        String authHeader = getAuthHeaderFromHeader(request);
+        if (authHeader != null && authHeader.startsWith("Bearer ")) {
             return authHeader.substring(7);
         }
-
         return null;
     }
 
-    public String getAuthHeaderFromHeader( HttpServletRequest request ) {
+    public String getAuthHeaderFromHeader(HttpServletRequest request) {
         return request.getHeader("Authorization");
     }
-
 
     private String toJwt(String token) {
         return token.substring(BEARER.length());
     }
 
-
     public Claims getJwtBody(String token) {
         if (StringUtils.isEmpty(token) || !token.startsWith(BEARER)) {
-            throw new UsernameNotFoundException("");
+            throw new UsernameNotFoundException("Invalid or empty token");
         }
+
         String jwt = toJwt(token);
-        return parser.parseClaimsJws(jwt).getBody();
+
+        return Jwts.parserBuilder()
+                .setSigningKey(signingKey).build()
+                .parseClaimsJws(jwt)
+                .getBody();
     }
 }

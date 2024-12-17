@@ -16,5 +16,4 @@ public class BigshareApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BigshareApplication.class, args);
 	}
-
 }

@@ -5,6 +5,7 @@ import com.bigshare.dtos.LoginDTO;
 import com.bigshare.repository.UserRepository;
 import com.bigshare.service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -19,7 +20,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     private final AuthService loginService;
 
     @Autowired
-    public UserDetailServiceImpl(UserRepository userRepository, AuthService loginService) {
+    public UserDetailServiceImpl(UserRepository userRepository, @Lazy AuthService loginService) {
         this.userRepository = userRepository;
         this.loginService = loginService;
     }

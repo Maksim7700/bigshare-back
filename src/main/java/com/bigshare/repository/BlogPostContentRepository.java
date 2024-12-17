@@ -10,7 +10,6 @@ import java.util.List;
 
 @Repository
 public interface BlogPostContentRepository extends JpaRepository<BlogPostContent, Long> {
-
     Page<BlogPostContent> findByBlogId(Long blogId, Pageable pageable);
 
 }

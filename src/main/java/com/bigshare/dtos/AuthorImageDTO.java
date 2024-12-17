@@ -14,6 +14,4 @@ public class AuthorImageDTO {
     private String data;
     private String type;
     private String name;
-
-    // Constructors, getters, and setters
 }

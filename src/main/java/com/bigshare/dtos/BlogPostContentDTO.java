@@ -8,10 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BlogPostContentDTO {
-
     private Long id;
     private String title;
     private String text;
     private BlogImageDTO image;
-
 }

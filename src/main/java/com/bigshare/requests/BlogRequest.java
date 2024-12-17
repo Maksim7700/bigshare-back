@@ -1,14 +1,10 @@
 package com.bigshare.requests;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 import org.springframework.web.multipart.MultipartFile;
 
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
+@Getter
 public class BlogRequest {
 
     private String title;

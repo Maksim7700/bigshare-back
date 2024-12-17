@@ -1,6 +1,5 @@
 package com.bigshare.dtos;
 
-import com.bigshare.model.author.Author;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

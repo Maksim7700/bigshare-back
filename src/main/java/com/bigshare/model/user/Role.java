@@ -1,6 +1,5 @@
 package com.bigshare.model.user;
 
-import com.bigshare.enums.RoleName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -8,11 +7,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 @Entity
 @Builder
@@ -33,11 +32,6 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return role;
     }
-
-    public void setRole(RoleName role) {
-        this.role = role.toString();
-    }
-
 
     @Override
     public String toString() {

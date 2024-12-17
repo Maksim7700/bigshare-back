@@ -14,6 +14,4 @@ public class BlogImageDTO {
     private byte[] data;
     private String type;
     private String name;
-
-    // Constructors, getters, and setters
 }

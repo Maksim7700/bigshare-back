@@ -14,6 +14,4 @@ public class AuthorDTO {
     private Long id;
     private String name;
     private AuthorImageDTO image;
-
-    // Constructors, getters, and setters
 }
