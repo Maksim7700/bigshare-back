@@ -26,6 +26,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
 import java.io.IOException;
+import java.util.Base64;
+import java.util.Optional;
 
 @Service
 public class BlogService {
@@ -44,19 +46,23 @@ public class BlogService {
     }
 
     @Transactional
-    public ResponseEntity<?> addBlog(BlogRequest blogRequest) throws IOException {
+    public ResponseEntity<?> addBlog(BlogRequest blogRequest) {
         Author author = authorRepository.findById(blogRequest.getAuthorId())
-            .orElseThrow(() -> new RuntimeException("Author not found with id: " + blogRequest.getAuthorId()));
+                .orElseThrow(() -> new RuntimeException("Author not found with id: " + blogRequest.getAuthorId()));
 
         Blog blog = new Blog();
         blog.setTitle(blogRequest.getTitle());
         blog.setContent(blogRequest.getContent());
         blog.setAuthor(author);
+
+        // Якщо зображення передано в Base64, зберігаємо його
         if (isPresentImage(blogRequest)) {
+            byte[] imageBytes = Base64.getDecoder().decode(blogRequest.getImage()); // Перетворюємо Base64 на байти
+
             BlogImage image = new BlogImage();
-            image.setName(blogRequest.getImage().getOriginalFilename());
-            image.setType(blogRequest.getImage().getContentType());
-            image.setData(blogRequest.getImage().getBytes());
+            image.setName(blogRequest.getFileName()); // Використовуємо передану назву файлу
+            image.setType(blogRequest.getType()); // Використовуємо переданий тип зображення
+            image.setData(imageBytes); // Зберігаємо байти зображення
 
             image = blogImageRepository.save(image);
             blog.setImage(image);
@@ -64,32 +70,35 @@ public class BlogService {
 
         blogRepository.save(blog);
 
-        return ResponseEntity.ok(HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body("Blog added successfully.");
     }
 
+
     @Transactional
-    public ResponseEntity<?> addBlogPostContent(long blogId, BlogPostContentRequest blogPostContentRequest) throws IOException {
+    public void addBlogPostContent(long blogId, BlogPostContentRequest request) {
         Blog blog = blogRepository.findById(blogId)
                 .orElseThrow(() -> new RuntimeException("Blog not found with id: " + blogId));
 
         BlogPostContent blogPostContent = new BlogPostContent();
-        blogPostContent.setText(blogPostContentRequest.getText());
-        blogPostContent.setTitle(blogPostContentRequest.getTitle());
+        blogPostContent.setText(request.getText());
+        blogPostContent.setTitle(request.getTitle());
         blogPostContent.setBlog(blog);
 
-        if (isPresentImage(blogPostContentRequest)) {
+        if (isPresentImage(request)) {
+            byte[] decodedImage = Base64.getDecoder().decode(request.getImage());
+
             BlogImage image = new BlogImage();
-            image.setName(blogPostContentRequest.getImage().getOriginalFilename());
-            image.setType(blogPostContentRequest.getImage().getContentType());
-            image.setData(blogPostContentRequest.getImage().getBytes());
+            image.setName(request.getFileName());
+            image.setType(request.getType());
+            image.setData(decodedImage);
 
             image = blogImageRepository.save(image);
             blogPostContent.setImage(image);
         }
-        blogPostContentRepository.save(blogPostContent);
 
-        return ResponseEntity.ok(HttpStatus.CREATED);
+        blogPostContentRepository.save(blogPostContent);
     }
+
 
     @Transactional
     public ResponseEntity<Page<BlogPostContentDTO>> getAllBlogPostContents(long blogId, int page, int size) {

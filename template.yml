@@ -21,6 +21,13 @@ Resources:
           Properties:
             Path: /{proxy+}
             Method: any
+            BinaryMediaTypes:
+              - '*~1*'
+              - '*/*'
+              - 'multipart~1form-data'
+              - 'multipart/form-data'
+              - 'application~1octet-stream'
+              - 'application/octet-stream'
 
 Outputs:
   JavaLambdaApi:

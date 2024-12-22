@@ -2,11 +2,8 @@ package com.bigshare.config.jwt;
 
 import com.bigshare.model.user.User;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
@@ -25,26 +22,16 @@ public class JWTTokenHelper {
     @Value("${jwt.auth.app}")
     private String appName;
 
-    @Value("${jwt.auth.secret_key}")
-    private String secretKey;
-
     @Value("${jwt.auth.expires_in}")
     private long expiresIn;
 
-    private final JwtParser parser;
     private final Key signingKey;
-    private final SignatureAlgorithm SIGNATURE_ALGORITHM = SignatureAlgorithm.HS256;
-
 
     public JWTTokenHelper(@Value("${jwt.auth.secret_key}") String secretKey) {
-        this.signingKey = new SecretKeySpec(secretKey.getBytes(), SIGNATURE_ALGORITHM.getJcaName());
-        this.parser = Jwts.parserBuilder()
-                .setSigningKey(signingKey)
-                .build();
+        this.signingKey = new SecretKeySpec(secretKey.getBytes(), SignatureAlgorithm.HS256.getJcaName());
     }
 
     public static final String BEARER = "Bearer ";
-
 
     public Claims getAllClaimsFromToken(String token) {
         Claims claims;

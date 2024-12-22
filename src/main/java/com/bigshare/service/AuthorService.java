@@ -4,10 +4,10 @@ import com.bigshare.converters.AuthorConverter;
 import com.bigshare.dtos.AuthorDTO;
 import com.bigshare.model.author.Author;
 import com.bigshare.model.author.AuthorImage;
-import com.bigshare.repository.AuthorRepository;
 import com.bigshare.repository.AuthorImageRepository;
-import com.bigshare.requests.AuthorRequest;
+import com.bigshare.repository.AuthorRepository;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,26 +18,29 @@ import java.util.Optional;
 
 @Service
 @AllArgsConstructor
+@Slf4j
 public class AuthorService {
+
+
 
     private final AuthorImageRepository authorImageRepository;
     private final AuthorRepository authorRepository;
 
-    public Author createAuthor(AuthorRequest authorRequest) throws IOException {
+    public void createAuthor(String authorName, String fileName, String contentType, byte[] bytes) throws IOException {
         Author author = new Author();
-        author.setName(authorRequest.getName());
+        author.setName(authorName);
 
-        if (authorRequest.getImage() != null && !authorRequest.getImage().isEmpty()) {
             AuthorImage image = new AuthorImage();
-            image.setName(authorRequest.getImage().getOriginalFilename());
-            image.setType(authorRequest.getImage().getContentType());
-            image.setData(authorRequest.getImage().getBytes());
+            image.setName(fileName);
+            image.setType(contentType);
+            image.setData(bytes);
 
             image = authorImageRepository.save(image);
+            log.info("Saved image {}", image);
             author.setImage(image);
-        }
 
-        return authorRepository.save(author);
+        log.info("Author created: {}", author);
+        authorRepository.save(author);
     }
 
     public ResponseEntity<?> getAuthorById(Long id) {

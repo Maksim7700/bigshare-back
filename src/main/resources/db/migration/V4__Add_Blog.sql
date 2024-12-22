@@ -2,14 +2,14 @@ CREATE TABLE author_image (
                               id BIGINT AUTO_INCREMENT PRIMARY KEY,
                               name VARCHAR(255) NOT NULL,
                               type VARCHAR(50) NOT NULL,
-                              data TINYBLOB NOT NULL
+                              data LONGBLOB NOT NULL
 );
 
 CREATE TABLE blog_image (
                             id BIGINT AUTO_INCREMENT PRIMARY KEY,
                             name VARCHAR(255) NOT NULL,
                             type VARCHAR(50) NOT NULL,
-                            data TINYBLOB NOT NULL
+                            data LONGBLOB NOT NULL
 );
 
 CREATE TABLE author (
@@ -23,7 +23,7 @@ CREATE TABLE blog
 (
     id         BIGINT AUTO_INCREMENT NOT NULL,
     title      VARCHAR(255) NOT NULL,
-    content    TINYTEXT NOT NULL,  -- Changed from LONGTEXT to TINYTEXT
+    content    TEXT NOT NULL,
     posted     BOOLEAN DEFAULT FALSE,
     author_id  BIGINT NOT NULL,
     image_id   BIGINT,
@@ -38,7 +38,7 @@ CREATE TABLE blog_post_content
 (
     id         BIGINT AUTO_INCREMENT NOT NULL,
     title      VARCHAR(255) NOT NULL,
-    text       TINYTEXT NOT NULL,
+    text       TEXT NOT NULL,
     image_id   BIGINT,
     blog_id    BIGINT,
     CONSTRAINT pk_blog_post_content PRIMARY KEY (id),

@@ -2,6 +2,7 @@ package com.bigshare.model.blog;
 
 import com.bigshare.model.author.Author;
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -39,6 +40,7 @@ public class Blog {
     private String title;
 
     @Lob
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @OneToOne(fetch = FetchType.LAZY)

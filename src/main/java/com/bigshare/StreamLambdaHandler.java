@@ -11,13 +11,12 @@ import java.io.OutputStream;
 import java.io.IOException;
 
 public class StreamLambdaHandler implements RequestStreamHandler {
-    private static SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
+    private static final SpringBootLambdaContainerHandler<AwsProxyRequest, AwsProxyResponse> handler;
 
     static {
         try {
             handler = SpringBootLambdaContainerHandler.getAwsProxyHandler(BigshareApplication.class);
         } catch (Exception e) {
-            e.printStackTrace();
             throw new RuntimeException("Error initializing Spring Boot Lambda handler", e);
         }
     }

@@ -61,7 +61,7 @@ public class SecurityConfiguration {
                 .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().authorizeHttpRequests()
-                .requestMatchers("/api/view/blogs", "/blogs", "/api/view/blogs/**", "/health", "/api/v1/auth/login", "/registration", "/swagger-ui/index.html", "/v3/api-docs/**")
+                .requestMatchers("/api/view/blogs", "/blogs", "/api/view/blogs/**", "/health", "/ping", "/api/v1/auth/login", "/registration", "/swagger-ui/index.html", "/v3/api-docs/**")
                 .permitAll()
                 .anyRequest().authenticated();
 
@@ -77,7 +77,7 @@ public class SecurityConfiguration {
         CorsConfiguration configuration = new CorsConfiguration();
         configuration.setAllowedOrigins(List.of("http://localhost:3000", "http://bigshare-ua.com", "https://bigshare-ua.com"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"));
-        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));
+        configuration.setAllowedHeaders(List.of("Authorization", "Content-Type", "*"));
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);

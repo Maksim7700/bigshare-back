@@ -1,5 +1,6 @@
 package com.bigshare.model.blog;
 
+import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,6 +34,7 @@ public class BlogPostContent {
     private String title;
 
     @Lob
+    @Column(columnDefinition = "TEXT")
     private String text;
 
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)

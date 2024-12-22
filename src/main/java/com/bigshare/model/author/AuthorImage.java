@@ -22,8 +22,7 @@ public class AuthorImage {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Lob
-    @Column(name = "data", columnDefinition = "TINYBLOB")
+    @Column(name = "data", columnDefinition = "LONGBLOB")
     private byte[] data;
 
     private String type;
